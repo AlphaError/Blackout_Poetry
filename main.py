@@ -26,7 +26,9 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 # Test Data -> dict collections with link:text structure
+# Note: can also be "page#.line#":text structure
 jk_trans_tweets = {
     "https://twitter.com/jk_rowling/status/1269382518362509313?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1269382518362509313%7Ctwgr%5E%7Ctwcon%5Es1_&ref_url=https%3A%2F%2Fwww.glamour.com%2Fstory%2Fa-complete-breakdown-of-the-jk-rowling-transgender-comments-controversy":"‘People who menstruate.’ I’m sure there used to be a word for those people. Someone help me out. Wumben? Wimpund? Woomud? Opinion: Creating a more equal post-COVID-19 world for people who menstruate",
     "https://twitter.com/jk_rowling/status/1269389298664701952?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1269389298664701952%7Ctwgr%5E%7Ctwcon%5Es1_&ref_url=https%3A%2F%2Fwww.glamour.com%2Fstory%2Fa-complete-breakdown-of-the-jk-rowling-transgender-comments-controversy":"If sex isn’t real, there’s no same-sex attraction. If sex isn’t real, the lived reality of women globally is erased. I know and love trans people, but erasing the concept of sex removes the ability of many to meaningfully discuss their lives. It isn’t hate to speak the truth.",
@@ -38,6 +40,7 @@ jk_trans_tweets = {
 
 poem_citation = "Day, M. (2014). Batter My Heart, Transgender’d God. Retrieved from https://poets.org/poem/batter-my-heart-transgenderd-god. "
 artist_poem = "Batter my heart, transgender’d god, for yours is the only ear that hears: place fear in my heart where faith has grown my senses dull & reassures my blood that it will never spill. Show every part to every stranger’s anger, surprise them with my drawers full up of maps that lead to vacancies & chart the distance from my pride, my core. Terror, do not depart but nest in the hollows of my loins & keep me on all fours. My knees, bring me to them; force my head to bow again. Replay the murders of my kin until my mind’s made new; let Adam’s bite obstruct my breath ’til I respire men & press his rib against my throat until my lips turn blue. You, O duo, O twin, whose likeness is kind: unwind my confidence & noose it round your fist so I might know you in vivid impermanence."
+# other potential poem to use: https://www.kaybarrett.net/song-for-the-kicked-out/
 
 
 # helper methods
