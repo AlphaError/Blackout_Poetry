@@ -11,8 +11,20 @@ In the future:
 -I'd love to expand this to cover a wider range of topics
 -conjure more examples of blackout pieces
 -create automated ways of visualizing the blackout pieces instead of just links
--format my code into a poetry piece of its own
+-format my code into a poetry piece of its own (since variables can be named anything, I can put comments anywhere, and lots of expressions in python are more or less english, I figured I could make a poem given the code's restrictions)
 """
+
+# text coloration for testing
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 # Test Data -> dict collections with link:text structure
 jk_trans_tweets = {
@@ -45,10 +57,12 @@ def find_word_by_letter(word, src):
 
 # main code
 def main():
-    print("Finding words that occur in various sources...\n")
+    print(bcolors.HEADER + "\nFinding words that occur in various sources...\n" + bcolors.ENDC)
     curr_data = jk_trans_tweets
 
-    poem_words = artist_poem.lower().replace("?","").replace("!","").replace(".","").replace(",","").split(" ")
+    poem_words = artist_poem.lower().replace("?","").replace("&", "and").replace("!","").replace(".","").replace(",","").replace(")","").replace("(","").replace(":","").replace(";","").replace("’","").split(" ")
+    if "" in poem_words:
+        poem_words.remove("")
     print("poem in question:", poem_words, "\n")
 
     # tests
@@ -59,33 +73,39 @@ def main():
     output = {}
     for link, text in curr_data.items():
         words_found = []
-        for i, word in enumerate(poem_words):
+        for word in poem_words:
             if word in text.lower():
                 words_found.append("*")  # word in src
             elif find_word_by_letter(word, text):
                 words_found.append("l")  # word piecemeal in src
             else:
                 words_found.append("-")  # word not in src
-        #         print("In link", link, "\nfound:", words_found, "\n")
+        # print("In link", link, "\nfound:", words_found, "\n")
         output[link] = words_found
 
     # find best result
-    print("calculating...\n")
+    print(bcolors.HEADER + "calculating...\n\n" + bcolors.ENDC)
     final_result = []
     for i in range(len(poem_words)):
-        for link, lst in output.items():
-            if lst[i] == "*":
-                final_result.append((link, "*"))
-                break
-        if len(final_result) == 0 or final_result[-1][1] != "*":
+        found_lst = []  # list of kinds of values found per word
+        for lst  in output.values():
+            found_lst.append(lst[i])
+        # print("Found List:", found_lst)
+        if "*" in found_lst:
+            for link, lst in output.items():
+                if lst[i] == "*":
+                    final_result.append((link, "*"))
+                    break
+        elif "l" in found_lst:
             for link, lst in output.items():
                 if lst[i] == "l":
                     final_result.append((link, "l"))
                     break
-            if len(final_result) == 0 or final_result[-1][1] != "l":
-                final_result.append(("", "-"))
-                print("\n****Word #", i, "not found in sources\n")
-        print("Found " + poem_words[i] + "(" +final_result[-1][1] + ") =>\n" + final_result[-1][0] + "\n")
+        else:
+            assert found_lst == (["-"]*len(curr_data.keys()))  # saftey check
+            final_result.append(("", "-"))
+            print(bcolors.FAIL + "****Word #" + str(i) + " (" + poem_words[i] + ") not found in sources"  + bcolors.ENDC)
+        print(bcolors.OKBLUE + poem_words[i] + bcolors.ENDC + " (" +final_result[-1][1] + ") =>\n" + final_result[-1][0] + "\n")
 
 if __name__ == "__main__":
     main()
